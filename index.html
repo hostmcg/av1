@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aisleview — Spatial Intelligence for Retail</title>
+<title>Hostview — Spatial Intelligence for Retail</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -174,37 +174,6 @@ nav.scrolled { background: rgba(10, 10, 15, 0.95); }
 }
 .btn-secondary:hover { border-color: var(--text-muted); background: rgba(255,255,255,0.03); }
 
-/* ---- STATS BAR ---- */
-.stats-bar {
-  position: relative; z-index: 2;
-  margin-top: -40px; padding: 0 24px;
-}
-.stats-inner {
-  max-width: 1000px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 16px; overflow: hidden;
-}
-.stat-item {
-  padding: 32px 24px; text-align: center;
-  border-right: 1px solid var(--border);
-  transition: background 0.3s;
-}
-.stat-item:last-child { border-right: none; }
-.stat-item:hover { background: var(--bg-card-hover); }
-.stat-number {
-  font-size: 2rem; font-weight: 800; letter-spacing: -1px;
-  margin-bottom: 6px;
-  background: linear-gradient(135deg, var(--accent-light), #c084fc);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.stat-number.red { background: linear-gradient(135deg, var(--accent-rose), #fb923c); -webkit-background-clip: text; background-clip: text; }
-.stat-number.green { background: linear-gradient(135deg, var(--accent-green), #34d399); -webkit-background-clip: text; background-clip: text; }
-.stat-number.amber { background: linear-gradient(135deg, var(--accent-amber), #fbbf24); -webkit-background-clip: text; background-clip: text; }
-.stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
-
 /* ---- SECTIONS ---- */
 section { padding: 120px 24px; }
 .section-label {
@@ -225,53 +194,6 @@ section { padding: 120px 24px; }
   font-size: 1.1rem; color: var(--text-secondary); max-width: 600px;
   line-height: 1.7;
 }
-
-/* ---- PROBLEM ---- */
-#problem { background: var(--bg-secondary); }
-.problem-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 64px; align-items: center; margin-top: 64px;
-}
-.problem-visual {
-  position: relative; aspect-ratio: 1;
-  display: flex; align-items: center; justify-content: center;
-}
-.orbit-ring {
-  position: absolute; border-radius: 50%;
-  border: 1px dashed rgba(99,102,241,0.15);
-  animation: spin 40s linear infinite;
-}
-.orbit-ring:nth-child(1) { width: 100%; height: 100%; }
-.orbit-ring:nth-child(2) { width: 72%; height: 72%; animation-direction: reverse; animation-duration: 30s; }
-.orbit-ring:nth-child(3) { width: 44%; height: 44%; animation-duration: 20s; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.orbit-center {
-  width: 100px; height: 100px; border-radius: 20px;
-  background: linear-gradient(135deg, var(--accent), #8b5cf6);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.5rem; z-index: 2;
-  box-shadow: 0 0 60px rgba(99,102,241,0.3);
-}
-.orbit-node {
-  position: absolute; width: 48px; height: 48px;
-  border-radius: 12px; background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem; z-index: 2;
-}
-.orbit-node:nth-child(5) { top: 5%; left: 50%; transform: translateX(-50%); }
-.orbit-node:nth-child(6) { top: 50%; right: 2%; transform: translateY(-50%); }
-.orbit-node:nth-child(7) { bottom: 5%; left: 50%; transform: translateX(-50%); }
-.orbit-node:nth-child(8) { top: 50%; left: 2%; transform: translateY(-50%); }
-.problem-points { display: flex; flex-direction: column; gap: 24px; }
-.problem-point {
-  padding: 24px; border-radius: 12px;
-  background: var(--bg-card); border: 1px solid var(--border);
-  transition: all 0.3s;
-}
-.problem-point:hover { border-color: var(--border-light); transform: translateX(4px); }
-.problem-point h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
-.problem-point p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; }
 
 /* ---- HOW IT WORKS ---- */
 .steps-grid {
@@ -306,56 +228,6 @@ section { padding: 120px 24px; }
 }
 .step-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
 .step-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; }
-
-/* ---- COMPARISON ---- */
-#comparison { background: var(--bg-secondary); }
-.comparison-table {
-  margin-top: 64px; border-radius: 16px; overflow: hidden;
-  border: 1px solid var(--border);
-}
-.comp-header, .comp-row {
-  display: grid; grid-template-columns: 1.5fr repeat(3, 1fr);
-  align-items: center;
-}
-.comp-header {
-  background: var(--bg-card); padding: 20px 0;
-  border-bottom: 1px solid var(--border);
-}
-.comp-header-cell { padding: 0 24px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-.comp-header-cell.ours { color: var(--accent-light); }
-.comp-row { padding: 20px 0; border-bottom: 1px solid var(--border); }
-.comp-row:last-child { border-bottom: none; }
-.comp-row:hover { background: rgba(255,255,255,0.01); }
-.comp-cell { padding: 0 24px; font-size: 0.9rem; color: var(--text-secondary); }
-.comp-cell:first-child { font-weight: 600; color: var(--text-primary); font-size: 0.88rem; }
-.comp-check { color: var(--accent-green); font-weight: 700; font-size: 1.1rem; }
-.comp-partial { color: var(--accent-amber); font-size: 0.85rem; }
-.comp-no { color: var(--text-muted); font-size: 0.85rem; }
-
-/* ---- USE CASES ---- */
-.usecases-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 24px; margin-top: 64px;
-}
-.usecase-card {
-  padding: 36px 28px; border-radius: 16px;
-  background: var(--bg-card); border: 1px solid var(--border);
-  transition: all 0.35s; cursor: default;
-}
-.usecase-card:hover { border-color: var(--border-light); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.25); }
-.usecase-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; margin-bottom: 20px;
-}
-.usecase-icon.purple { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.2); }
-.usecase-icon.green { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
-.usecase-icon.amber { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); }
-.usecase-icon.rose { background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.2); }
-.usecase-icon.blue { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); }
-.usecase-icon.teal { background: rgba(20,184,166,0.1); border: 1px solid rgba(20,184,166,0.2); }
-.usecase-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
-.usecase-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
 
 /* ---- ROI ---- */
 #roi { background: var(--bg-secondary); }
@@ -511,15 +383,7 @@ footer {
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .mobile-toggle { display: block; }
-  .stats-inner { grid-template-columns: 1fr 1fr; }
-  .stat-item:nth-child(2) { border-right: none; }
-  .stat-item:nth-child(3) { border-right: 1px solid var(--border); }
-  .problem-grid { grid-template-columns: 1fr; gap: 48px; }
-  .problem-visual { max-width: 360px; margin: 0 auto; }
   .steps-grid { grid-template-columns: 1fr; max-width: 480px; }
-  .usecases-grid { grid-template-columns: 1fr; max-width: 480px; }
-  .comp-header, .comp-row { grid-template-columns: 1.2fr repeat(3, 1fr); font-size: 0.8rem; }
-  .comp-cell { padding: 0 12px; }
   .about-content { grid-template-columns: 1fr; }
   .contact-wrapper { grid-template-columns: 1fr; }
   .roi-inputs { grid-template-columns: 1fr; }
@@ -527,11 +391,7 @@ footer {
   .footer-inner { flex-direction: column; }
 }
 @media (max-width: 600px) {
-  .stats-inner { grid-template-columns: 1fr; }
-  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
-  .stat-item:last-child { border-bottom: none; }
   .hero-buttons { flex-direction: column; align-items: center; }
-  .comp-header-cell, .comp-cell { padding: 0 8px; font-size: 0.75rem; }
 }
 </style>
 </head>
@@ -541,14 +401,11 @@ footer {
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#" class="nav-logo">
-      <span class="logo-icon">Av</span>
-      aisleview
+      <span class="logo-icon">Hv</span>
+      hostview
     </a>
     <ul class="nav-links">
-      <li><a href="#problem">Problem</a></li>
       <li><a href="#solution">Solution</a></li>
-      <li><a href="#comparison">Why Us</a></li>
-      <li><a href="#usecases">Use Cases</a></li>
       <li><a href="#roi">ROI</a></li>
       <li><a href="#about">About</a></li>
     </ul>
@@ -559,10 +416,7 @@ footer {
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#problem" onclick="closeMobile()">Problem</a>
   <a href="#solution" onclick="closeMobile()">Solution</a>
-  <a href="#comparison" onclick="closeMobile()">Why Us</a>
-  <a href="#usecases" onclick="closeMobile()">Use Cases</a>
   <a href="#roi" onclick="closeMobile()">ROI</a>
   <a href="#about" onclick="closeMobile()">About</a>
   <a href="#contact" onclick="closeMobile()">Request Demo</a>
@@ -581,7 +435,7 @@ footer {
       Know it before<br>your <span class="accent-word">customer</span> does.
     </h1>
     <p>
-      We connect your physical retail environment to AI intelligence — delivering real-time visibility that turns shelf-level blind spots into decisive action.
+      We connect your physical retail environment to AI intelligence — delivering real-time spatial visibility that turns every signal into decisive action.
     </p>
     <div class="hero-buttons">
       <a href="#contact" class="btn-primary">
@@ -595,79 +449,14 @@ footer {
   </div>
 </section>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-item">
-      <div class="stat-number red" data-target="1.2" data-prefix="$" data-suffix="T">$0T</div>
-      <div class="stat-label">Lost globally to out-of-stock annually</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number amber" data-target="8" data-suffix="%">0%</div>
-      <div class="stat-label">Average SKUs unavailable at any given time</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" data-target="69" data-suffix="%">0%</div>
-      <div class="stat-label">Shoppers will switch brands or stores</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number green" data-target="100" data-prefix="$" data-suffix="K+">$0K+</div>
-      <div class="stat-label">Potential savings per location per month</div>
-    </div>
-  </div>
-</div>
-
-<!-- PROBLEM -->
-<section id="problem">
-  <div class="container">
-    <div class="fade-in">
-      <span class="section-label">The Blind Spot</span>
-      <h2 class="section-title">Retail has a trillion-dollar visibility problem.</h2>
-      <p class="section-desc">
-        Legacy systems detect problems after the damage is done. The gap between what's supposed to be on the shelf and what's actually there costs the industry more than most companies' entire revenue.
-      </p>
-    </div>
-    <div class="problem-grid">
-      <div class="problem-visual fade-in">
-        <div class="orbit-ring"></div>
-        <div class="orbit-ring"></div>
-        <div class="orbit-ring"></div>
-        <div class="orbit-center">&#x1f441;</div>
-        <div class="orbit-node">&#128722;</div>
-        <div class="orbit-node">&#128230;</div>
-        <div class="orbit-node">&#128200;</div>
-        <div class="orbit-node">&#9888;&#65039;</div>
-      </div>
-      <div class="problem-points fade-in fade-in-delay-1">
-        <div class="problem-point">
-          <h3>Snapshot Data, Not Reality</h3>
-          <p>Periodic audits and manual shelf checks capture moments in time — missing the majority of out-of-stock events that happen between walks.</p>
-        </div>
-        <div class="problem-point">
-          <h3>Detection Without Action</h3>
-          <p>Most systems stop at "there's a problem." They generate alerts and dashboards but don't orchestrate the fix — leaving store teams to figure it out alone.</p>
-        </div>
-        <div class="problem-point">
-          <h3>Systems That Don't See</h3>
-          <p>Inventory records say one thing. The shelf says another. Phantom inventory, mis-shelved products, and backroom disconnects create a gap no forecast can bridge.</p>
-        </div>
-        <div class="problem-point">
-          <h3>Expensive to Scale</h3>
-          <p>Existing shelf-monitoring infrastructure requires massive capital outlay — putting real-time visibility out of reach for mid-market and regional retailers.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- HOW IT WORKS -->
 <section id="solution">
   <div class="container">
     <div class="fade-in">
       <span class="section-label">How It Works</span>
-      <h2 class="section-title">From blind spot to action in three steps.</h2>
+      <h2 class="section-title">From insight to action in three steps.</h2>
       <p class="section-desc">
-        Aisleview's spatial intelligence layer integrates seamlessly into your existing store operations — no disruption, no heavy infrastructure.
+        Hostview's spatial intelligence layer integrates seamlessly into your existing store operations — no disruption, no heavy infrastructure.
       </p>
     </div>
     <div class="steps-grid">
@@ -693,114 +482,6 @@ footer {
   </div>
 </section>
 
-<!-- COMPARISON -->
-<section id="comparison">
-  <div class="container">
-    <div class="fade-in">
-      <span class="section-label">Why Aisleview</span>
-      <h2 class="section-title">A fundamentally different approach.</h2>
-      <p class="section-desc">
-        We didn't improve legacy shelf-monitoring. We rethought it from first principles.
-      </p>
-    </div>
-    <div class="comparison-table fade-in fade-in-delay-1">
-      <div class="comp-header">
-        <div class="comp-header-cell">Capability</div>
-        <div class="comp-header-cell ours">Aisleview</div>
-        <div class="comp-header-cell">Autonomous Robots</div>
-        <div class="comp-header-cell">Fixed Cameras</div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell">Continuous Coverage</div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-        <div class="comp-cell"><span class="comp-partial">Periodic scans</span></div>
-        <div class="comp-cell"><span class="comp-partial">Fixed zones only</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell">Low Capex / Fast Deploy</div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-        <div class="comp-cell"><span class="comp-no">High cost</span></div>
-        <div class="comp-cell"><span class="comp-no">High cost</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell">Zero Operations Disruption</div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-        <div class="comp-cell"><span class="comp-no">Aisle blocking</span></div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell">Closed-Loop Action Engine</div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-        <div class="comp-cell"><span class="comp-no">Detection only</span></div>
-        <div class="comp-cell"><span class="comp-no">Detection only</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell">Works Across All Categories</div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-        <div class="comp-cell"><span class="comp-partial">Structured only</span></div>
-        <div class="comp-cell"><span class="comp-partial">Structured only</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell">Mid-Market Accessible</div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-        <div class="comp-cell"><span class="comp-no">Enterprise only</span></div>
-        <div class="comp-cell"><span class="comp-no">Enterprise only</span></div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell">Real-Time Root Cause Analysis</div>
-        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
-        <div class="comp-cell"><span class="comp-partial">Limited</span></div>
-        <div class="comp-cell"><span class="comp-partial">Limited</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- USE CASES -->
-<section id="usecases">
-  <div class="container">
-    <div class="fade-in">
-      <span class="section-label">Applications</span>
-      <h2 class="section-title">One platform. Multiple retail intelligence layers.</h2>
-      <p class="section-desc">
-        Aisleview's spatial intelligence doesn't just detect out-of-stocks. It sees your entire store.
-      </p>
-    </div>
-    <div class="usecases-grid">
-      <div class="usecase-card fade-in fade-in-delay-1">
-        <div class="usecase-icon purple">&#128269;</div>
-        <h3>Out-of-Stock Detection</h3>
-        <p>Continuous, real-time identification of empty shelves and low-stock conditions — prioritized by revenue impact and actionable immediately.</p>
-      </div>
-      <div class="usecase-card fade-in fade-in-delay-2">
-        <div class="usecase-icon green">&#128202;</div>
-        <h3>Planogram Compliance</h3>
-        <p>Verify shelf layouts match planned configurations. Detect mis-shelved, mis-faced, and out-of-place products automatically.</p>
-      </div>
-      <div class="usecase-card fade-in fade-in-delay-3">
-        <div class="usecase-icon amber">&#128176;</div>
-        <h3>Price &amp; Label Verification</h3>
-        <p>Spatial matching of shelf labels to product placement ensures pricing accuracy and regulatory compliance across every aisle.</p>
-      </div>
-      <div class="usecase-card fade-in fade-in-delay-1">
-        <div class="usecase-icon rose">&#127981;</div>
-        <h3>Spatial Store Mapping</h3>
-        <p>Build living digital representations of your store environment. Enable location-aware analytics for CPG brands and retail operations teams.</p>
-      </div>
-      <div class="usecase-card fade-in fade-in-delay-2">
-        <div class="usecase-icon blue">&#128203;</div>
-        <h3>Compliance Auditing</h3>
-        <p>Automated verification of promotional displays, endcap execution, and brand standards — with timestamped evidence trails.</p>
-      </div>
-      <div class="usecase-card fade-in fade-in-delay-3">
-        <div class="usecase-icon teal">&#128101;</div>
-        <h3>Operational Intelligence</h3>
-        <p>Insights into store conditions, associate workflows, and safety compliance. Turn ambient data into continuous improvement.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ROI CALCULATOR -->
 <section id="roi">
   <div class="container">
@@ -808,18 +489,18 @@ footer {
       <span class="section-label">ROI Calculator</span>
       <h2 class="section-title">See the impact for your stores.</h2>
       <p class="section-desc">
-        Estimate how much revenue Aisleview can recover by closing the shelf-level visibility gap.
+        Estimate how much revenue Hostview can recover for your retail operations.
       </p>
     </div>
     <div class="roi-calculator fade-in fade-in-delay-1">
       <div class="roi-inputs">
         <div class="roi-field">
           <label for="stores">Number of Stores</label>
-          <input type="number" id="stores" value="25" min="1" max="10000" oninput="calcROI()">
+          <input type="number" id="stores" value="10" min="1" max="10000" oninput="calcROI()">
         </div>
         <div class="roi-field">
           <label for="revenue">Avg. Annual Revenue per Store ($)</label>
-          <input type="number" id="revenue" value="15000000" min="100000" step="100000" oninput="calcROI()">
+          <input type="number" id="revenue" value="36000000" min="100000" step="100000" oninput="calcROI()">
         </div>
         <div class="roi-field">
           <label for="oosRate">Estimated OOS Rate (%)</label>
@@ -856,7 +537,7 @@ footer {
           Retail in 2025 is no longer online vs. offline — it's one continuous, connected journey. Yet the physical store remains a black box. Inventory systems are disconnected from shelf reality. Operations teams fly blind. And customers walk away.
         </p>
         <p>
-          Aisleview was founded on a simple premise: the next wave of retail winners won't be the brands with the most channels, but the ones that can orchestrate data, stores, and operations as one system.
+          Hostview was founded on a simple premise: the next wave of retail winners won't be the brands with the most channels, but the ones that can orchestrate data, stores, and operations as one system.
         </p>
         <p>
           We're a team of spatial computing, computer vision, and retail operations veterans building the platform that makes every interaction in a store visible, actionable, and intentional.
@@ -890,7 +571,7 @@ footer {
   <div class="fade-in">
     <h2>See what your shelves<br>have been telling you.</h2>
     <p>
-      Schedule a confidential demo to see Aisleview's spatial intelligence in action for your stores.
+      Schedule a confidential demo to see Hostview's spatial intelligence in action for your stores.
     </p>
     <div class="hero-buttons">
       <a href="#contact" class="btn-primary">
@@ -907,7 +588,7 @@ footer {
     <div class="contact-wrapper">
       <div class="contact-info fade-in">
         <span class="section-label">Get Started</span>
-        <h3>Let's explore what Aisleview can do for your stores.</h3>
+        <h3>Let's explore what Hostview can do for your stores.</h3>
         <p>
           We work under NDA with select retail partners. Tell us about your environment and we'll show you what continuous spatial intelligence looks like for your operation.
         </p>
@@ -915,7 +596,7 @@ footer {
           <div class="contact-detail-icon">&#128231;</div>
           <div class="contact-detail-text">
             <strong>Email</strong>
-            hello@aisleview.ai
+            contact@hostview.ai
           </div>
         </div>
         <div class="contact-detail">
@@ -993,8 +674,8 @@ footer {
   <div class="footer-inner">
     <div class="footer-brand">
       <a href="#" class="nav-logo">
-        <span class="logo-icon">Av</span>
-        aisleview
+        <span class="logo-icon">Hv</span>
+        hostview
       </a>
       <p>Spatial intelligence for retail. Connecting the physical world to AI-driven action.</p>
     </div>
@@ -1002,8 +683,6 @@ footer {
       <h4>Platform</h4>
       <ul>
         <li><a href="#solution">How It Works</a></li>
-        <li><a href="#usecases">Use Cases</a></li>
-        <li><a href="#comparison">Why Aisleview</a></li>
         <li><a href="#roi">ROI Calculator</a></li>
       </ul>
     </div>
@@ -1023,7 +702,7 @@ footer {
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2025 Aisleview, Inc. All rights reserved.</span>
+    <span>&copy; 2025 Hostview, Inc. All rights reserved.</span>
     <span>Confidential &amp; Proprietary</span>
   </div>
 </footer>
@@ -1052,41 +731,6 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// --- Stat counter animation ---
-function animateCounters() {
-  document.querySelectorAll('.stat-number[data-target]').forEach(el => {
-    const target = parseFloat(el.dataset.target);
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const isDecimal = target < 10;
-    const duration = 2000;
-    const start = performance.now();
-
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = target * eased;
-      if (isDecimal) {
-        el.textContent = prefix + current.toFixed(1) + suffix;
-      } else {
-        el.textContent = prefix + Math.round(current) + suffix;
-      }
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
-  });
-}
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateCounters();
-      statsObserver.disconnect();
-    }
-  });
-}, { threshold: 0.3 });
-statsObserver.observe(document.querySelector('.stats-bar'));
 
 // --- ROI Calculator ---
 function calcROI() {
