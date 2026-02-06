@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aisleview — Spatial Intelligence for Retail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-card: #16161f;
+  --bg-card-hover: #1c1c28;
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --accent-glow: rgba(99, 102, 241, 0.15);
+  --accent-green: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --text-primary: #f1f1f4;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-light: rgba(255, 255, 255, 0.1);
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- UTILITY ---- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ---- NAV ---- */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 24px;
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+nav.scrolled { background: rgba(10, 10, 15, 0.95); }
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+.nav-logo {
+  font-weight: 800; font-size: 1.35rem; color: var(--text-primary);
+  text-decoration: none; letter-spacing: -0.5px;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo .logo-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: #fff;
+}
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.9rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text-primary); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; border-radius: 8px; font-size: 0.875rem;
+  font-weight: 600; text-decoration: none; cursor: pointer;
+  background: var(--accent); color: #fff; border: none;
+  transition: all 0.25s ease;
+}
+.nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(99,102,241,0.3); }
+.mobile-toggle { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: 8px; }
+.mobile-menu {
+  display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+  background: rgba(10,10,15,0.98); backdrop-filter: blur(20px);
+  padding: 32px 24px; z-index: 99;
+}
+.mobile-menu.open { display: flex; flex-direction: column; gap: 24px; }
+.mobile-menu a {
+  color: var(--text-primary); text-decoration: none;
+  font-size: 1.25rem; font-weight: 500; padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ---- HERO ---- */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 120px 24px 80px; text-align: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(168,85,247,0.06) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+}
+.hero-content { position: relative; z-index: 1; max-width: 860px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px 6px 8px; border-radius: 100px;
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+.hero-badge .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.2rem); font-weight: 800;
+  line-height: 1.08; letter-spacing: -1.5px;
+  margin-bottom: 24px;
+  background: linear-gradient(180deg, #fff 40%, rgba(255,255,255,0.5) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero h1 .accent-word {
+  background: linear-gradient(135deg, var(--accent-light), #c084fc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: 1.2rem; color: var(--text-secondary); max-width: 600px;
+  margin: 0 auto 40px; line-height: 1.7; font-weight: 400;
+}
+.hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 10px;
+  background: var(--accent); color: #fff;
+  font-size: 1rem; font-weight: 600; text-decoration: none;
+  border: none; cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 0 0 rgba(99,102,241,0), 0 4px 16px rgba(0,0,0,0.2);
+}
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 0 30px rgba(99,102,241,0.25), 0 8px 24px rgba(0,0,0,0.3); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 10px;
+  background: transparent; color: var(--text-primary);
+  font-size: 1rem; font-weight: 600; text-decoration: none;
+  border: 1px solid var(--border-light); cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-secondary:hover { border-color: var(--text-muted); background: rgba(255,255,255,0.03); }
+
+/* ---- STATS BAR ---- */
+.stats-bar {
+  position: relative; z-index: 2;
+  margin-top: -40px; padding: 0 24px;
+}
+.stats-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px; overflow: hidden;
+}
+.stat-item {
+  padding: 32px 24px; text-align: center;
+  border-right: 1px solid var(--border);
+  transition: background 0.3s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: var(--bg-card-hover); }
+.stat-number {
+  font-size: 2rem; font-weight: 800; letter-spacing: -1px;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--accent-light), #c084fc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-number.red { background: linear-gradient(135deg, var(--accent-rose), #fb923c); -webkit-background-clip: text; background-clip: text; }
+.stat-number.green { background: linear-gradient(135deg, var(--accent-green), #34d399); -webkit-background-clip: text; background-clip: text; }
+.stat-number.amber { background: linear-gradient(135deg, var(--accent-amber), #fbbf24); -webkit-background-clip: text; background-clip: text; }
+.stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+/* ---- SECTIONS ---- */
+section { padding: 120px 24px; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--accent-light);
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: ''; width: 24px; height: 1px; background: var(--accent);
+}
+.section-title {
+  font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800;
+  line-height: 1.15; letter-spacing: -1px;
+  margin-bottom: 20px; max-width: 700px;
+}
+.section-desc {
+  font-size: 1.1rem; color: var(--text-secondary); max-width: 600px;
+  line-height: 1.7;
+}
+
+/* ---- PROBLEM ---- */
+#problem { background: var(--bg-secondary); }
+.problem-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center; margin-top: 64px;
+}
+.problem-visual {
+  position: relative; aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.orbit-ring {
+  position: absolute; border-radius: 50%;
+  border: 1px dashed rgba(99,102,241,0.15);
+  animation: spin 40s linear infinite;
+}
+.orbit-ring:nth-child(1) { width: 100%; height: 100%; }
+.orbit-ring:nth-child(2) { width: 72%; height: 72%; animation-direction: reverse; animation-duration: 30s; }
+.orbit-ring:nth-child(3) { width: 44%; height: 44%; animation-duration: 20s; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.orbit-center {
+  width: 100px; height: 100px; border-radius: 20px;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; z-index: 2;
+  box-shadow: 0 0 60px rgba(99,102,241,0.3);
+}
+.orbit-node {
+  position: absolute; width: 48px; height: 48px;
+  border-radius: 12px; background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; z-index: 2;
+}
+.orbit-node:nth-child(5) { top: 5%; left: 50%; transform: translateX(-50%); }
+.orbit-node:nth-child(6) { top: 50%; right: 2%; transform: translateY(-50%); }
+.orbit-node:nth-child(7) { bottom: 5%; left: 50%; transform: translateX(-50%); }
+.orbit-node:nth-child(8) { top: 50%; left: 2%; transform: translateY(-50%); }
+.problem-points { display: flex; flex-direction: column; gap: 24px; }
+.problem-point {
+  padding: 24px; border-radius: 12px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.problem-point:hover { border-color: var(--border-light); transform: translateX(4px); }
+.problem-point h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+.problem-point p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* ---- HOW IT WORKS ---- */
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 32px; margin-top: 64px;
+}
+.step-card {
+  position: relative; padding: 40px 32px;
+  border-radius: 16px; background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: all 0.35s ease;
+  overflow: hidden;
+}
+.step-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  opacity: 0; transition: opacity 0.3s;
+}
+.step-card:hover { border-color: var(--border-light); transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+.step-card:hover::before { opacity: 1; }
+.step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem; font-weight: 500;
+  color: var(--accent-light); letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+.step-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: var(--accent-glow); border: 1px solid rgba(99,102,241,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 24px;
+}
+.step-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+.step-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; }
+
+/* ---- COMPARISON ---- */
+#comparison { background: var(--bg-secondary); }
+.comparison-table {
+  margin-top: 64px; border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.comp-header, .comp-row {
+  display: grid; grid-template-columns: 1.5fr repeat(3, 1fr);
+  align-items: center;
+}
+.comp-header {
+  background: var(--bg-card); padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.comp-header-cell { padding: 0 24px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.comp-header-cell.ours { color: var(--accent-light); }
+.comp-row { padding: 20px 0; border-bottom: 1px solid var(--border); }
+.comp-row:last-child { border-bottom: none; }
+.comp-row:hover { background: rgba(255,255,255,0.01); }
+.comp-cell { padding: 0 24px; font-size: 0.9rem; color: var(--text-secondary); }
+.comp-cell:first-child { font-weight: 600; color: var(--text-primary); font-size: 0.88rem; }
+.comp-check { color: var(--accent-green); font-weight: 700; font-size: 1.1rem; }
+.comp-partial { color: var(--accent-amber); font-size: 0.85rem; }
+.comp-no { color: var(--text-muted); font-size: 0.85rem; }
+
+/* ---- USE CASES ---- */
+.usecases-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 64px;
+}
+.usecase-card {
+  padding: 36px 28px; border-radius: 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  transition: all 0.35s; cursor: default;
+}
+.usecase-card:hover { border-color: var(--border-light); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.25); }
+.usecase-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin-bottom: 20px;
+}
+.usecase-icon.purple { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.2); }
+.usecase-icon.green { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
+.usecase-icon.amber { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); }
+.usecase-icon.rose { background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.2); }
+.usecase-icon.blue { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); }
+.usecase-icon.teal { background: rgba(20,184,166,0.1); border: 1px solid rgba(20,184,166,0.2); }
+.usecase-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* ---- ROI ---- */
+#roi { background: var(--bg-secondary); }
+.roi-calculator {
+  margin-top: 64px; max-width: 800px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 48px;
+}
+.roi-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+.roi-field label {
+  display: block; font-size: 0.85rem; font-weight: 600;
+  color: var(--text-secondary); margin-bottom: 8px;
+}
+.roi-field input, .roi-field select {
+  width: 100%; padding: 14px 16px; border-radius: 10px;
+  background: var(--bg-primary); border: 1px solid var(--border-light);
+  color: var(--text-primary); font-size: 1rem; font-family: inherit;
+  outline: none; transition: border-color 0.2s;
+}
+.roi-field input:focus, .roi-field select:focus { border-color: var(--accent); }
+.roi-field select option { background: var(--bg-primary); }
+.roi-result {
+  padding: 32px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.06));
+  border: 1px solid rgba(99,102,241,0.15);
+  text-align: center;
+}
+.roi-result-label { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500; }
+.roi-result-value {
+  font-size: 3rem; font-weight: 800; letter-spacing: -1.5px;
+  background: linear-gradient(135deg, var(--accent-green), #34d399);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 4px;
+}
+.roi-result-sub { font-size: 0.85rem; color: var(--text-muted); }
+
+/* ---- ABOUT ---- */
+.about-content {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; margin-top: 64px; align-items: start;
+}
+.about-text p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px; }
+.about-values { display: flex; flex-direction: column; gap: 20px; }
+.value-item {
+  padding: 24px; border-radius: 12px;
+  background: var(--bg-card); border: 1px solid var(--border);
+}
+.value-item h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.value-item p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* ---- CONTACT ---- */
+#contact { background: var(--bg-secondary); }
+.contact-wrapper {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; margin-top: 64px; align-items: start;
+}
+.contact-info h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; }
+.contact-info p { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 32px; }
+.contact-detail {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.contact-detail-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--accent-glow); border: 1px solid rgba(99,102,241,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.contact-detail-text { font-size: 0.92rem; color: var(--text-secondary); }
+.contact-detail-text strong { color: var(--text-primary); display: block; font-size: 0.85rem; margin-bottom: 2px; }
+.contact-form {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 40px;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; font-size: 0.85rem; font-weight: 600;
+  color: var(--text-secondary); margin-bottom: 8px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 14px 16px; border-radius: 10px;
+  background: var(--bg-primary); border: 1px solid var(--border-light);
+  color: var(--text-primary); font-size: 0.95rem; font-family: inherit;
+  outline: none; transition: border-color 0.2s; resize: vertical;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+.form-group select option { background: var(--bg-primary); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.btn-submit {
+  width: 100%; padding: 16px; border-radius: 10px;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: all 0.25s; font-family: inherit;
+}
+.btn-submit:hover { background: var(--accent-light); box-shadow: 0 4px 20px rgba(99,102,241,0.3); }
+
+/* ---- FOOTER ---- */
+footer {
+  padding: 64px 24px 32px;
+  border-top: 1px solid var(--border);
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: start;
+  flex-wrap: wrap; gap: 48px;
+}
+.footer-brand p { color: var(--text-muted); font-size: 0.88rem; max-width: 300px; margin-top: 12px; line-height: 1.6; }
+.footer-col h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 16px; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+.footer-col a:hover { color: var(--text-primary); }
+.footer-bottom {
+  max-width: 1200px; margin: 48px auto 0;
+  padding-top: 24px; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.82rem; color: var(--text-muted);
+}
+
+/* ---- CTA BANNER ---- */
+.cta-banner {
+  position: relative; padding: 100px 24px; text-align: center;
+  overflow: hidden;
+}
+.cta-banner-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%, rgba(99,102,241,0.1) 0%, transparent 60%);
+}
+.cta-banner h2 {
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+  letter-spacing: -1px; margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.cta-banner p {
+  font-size: 1.15rem; color: var(--text-secondary);
+  margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto;
+  position: relative; z-index: 1;
+}
+.cta-banner .hero-buttons { position: relative; z-index: 1; }
+
+/* ---- ANIMATIONS ---- */
+.fade-in {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .mobile-toggle { display: block; }
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat-item:nth-child(2) { border-right: none; }
+  .stat-item:nth-child(3) { border-right: 1px solid var(--border); }
+  .problem-grid { grid-template-columns: 1fr; gap: 48px; }
+  .problem-visual { max-width: 360px; margin: 0 auto; }
+  .steps-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .usecases-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .comp-header, .comp-row { grid-template-columns: 1.2fr repeat(3, 1fr); font-size: 0.8rem; }
+  .comp-cell { padding: 0 12px; }
+  .about-content { grid-template-columns: 1fr; }
+  .contact-wrapper { grid-template-columns: 1fr; }
+  .roi-inputs { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .stats-inner { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .comp-header-cell, .comp-cell { padding: 0 8px; font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="logo-icon">Av</span>
+      aisleview
+    </a>
+    <ul class="nav-links">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#solution">Solution</a></li>
+      <li><a href="#comparison">Why Us</a></li>
+      <li><a href="#usecases">Use Cases</a></li>
+      <li><a href="#roi">ROI</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Request Demo</a>
+    <button class="mobile-toggle" onclick="toggleMobile()" aria-label="Menu">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#problem" onclick="closeMobile()">Problem</a>
+  <a href="#solution" onclick="closeMobile()">Solution</a>
+  <a href="#comparison" onclick="closeMobile()">Why Us</a>
+  <a href="#usecases" onclick="closeMobile()">Use Cases</a>
+  <a href="#roi" onclick="closeMobile()">ROI</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Request Demo</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Spatial Intelligence for Retail
+    </div>
+    <h1>
+      Know it before<br>your <span class="accent-word">customer</span> does.
+    </h1>
+    <p>
+      We connect your physical retail environment to AI intelligence — delivering real-time visibility that turns shelf-level blind spots into decisive action.
+    </p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">
+        Request a Demo
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#solution" class="btn-secondary">
+        See How It Works
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-number red" data-target="1.2" data-prefix="$" data-suffix="T">$0T</div>
+      <div class="stat-label">Lost globally to out-of-stock annually</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number amber" data-target="8" data-suffix="%">0%</div>
+      <div class="stat-label">Average SKUs unavailable at any given time</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="69" data-suffix="%">0%</div>
+      <div class="stat-label">Shoppers will switch brands or stores</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number green" data-target="100" data-prefix="$" data-suffix="K+">$0K+</div>
+      <div class="stat-label">Potential savings per location per month</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">The Blind Spot</span>
+      <h2 class="section-title">Retail has a trillion-dollar visibility problem.</h2>
+      <p class="section-desc">
+        Legacy systems detect problems after the damage is done. The gap between what's supposed to be on the shelf and what's actually there costs the industry more than most companies' entire revenue.
+      </p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-visual fade-in">
+        <div class="orbit-ring"></div>
+        <div class="orbit-ring"></div>
+        <div class="orbit-ring"></div>
+        <div class="orbit-center">&#x1f441;</div>
+        <div class="orbit-node">&#128722;</div>
+        <div class="orbit-node">&#128230;</div>
+        <div class="orbit-node">&#128200;</div>
+        <div class="orbit-node">&#9888;&#65039;</div>
+      </div>
+      <div class="problem-points fade-in fade-in-delay-1">
+        <div class="problem-point">
+          <h3>Snapshot Data, Not Reality</h3>
+          <p>Periodic audits and manual shelf checks capture moments in time — missing the majority of out-of-stock events that happen between walks.</p>
+        </div>
+        <div class="problem-point">
+          <h3>Detection Without Action</h3>
+          <p>Most systems stop at "there's a problem." They generate alerts and dashboards but don't orchestrate the fix — leaving store teams to figure it out alone.</p>
+        </div>
+        <div class="problem-point">
+          <h3>Systems That Don't See</h3>
+          <p>Inventory records say one thing. The shelf says another. Phantom inventory, mis-shelved products, and backroom disconnects create a gap no forecast can bridge.</p>
+        </div>
+        <div class="problem-point">
+          <h3>Expensive to Scale</h3>
+          <p>Existing shelf-monitoring infrastructure requires massive capital outlay — putting real-time visibility out of reach for mid-market and regional retailers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="solution">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">How It Works</span>
+      <h2 class="section-title">From blind spot to action in three steps.</h2>
+      <p class="section-desc">
+        Aisleview's spatial intelligence layer integrates seamlessly into your existing store operations — no disruption, no heavy infrastructure.
+      </p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card fade-in fade-in-delay-1">
+        <div class="step-num">01 — CONNECT</div>
+        <div class="step-icon">&#128279;</div>
+        <h3>Seamless Integration</h3>
+        <p>Deploy into your environment without changing daily operations. Our system adapts to your workflow — not the other way around. Zero operational disruption.</p>
+      </div>
+      <div class="step-card fade-in fade-in-delay-2">
+        <div class="step-num">02 — SEE</div>
+        <div class="step-icon">&#129504;</div>
+        <h3>Continuous Spatial Intelligence</h3>
+        <p>Real-time, location-aware visibility across your store. Our AI engine identifies what's wrong, where, and why — from empty facings to compliance gaps.</p>
+      </div>
+      <div class="step-card fade-in fade-in-delay-3">
+        <div class="step-num">03 — ACT</div>
+        <div class="step-icon">&#9889;</div>
+        <h3>Prioritized, Verified Action</h3>
+        <p>Automatically route the right task to the right person at the right time. Close the loop with verification — ensuring every issue is resolved, not just reported.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="comparison">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">Why Aisleview</span>
+      <h2 class="section-title">A fundamentally different approach.</h2>
+      <p class="section-desc">
+        We didn't improve legacy shelf-monitoring. We rethought it from first principles.
+      </p>
+    </div>
+    <div class="comparison-table fade-in fade-in-delay-1">
+      <div class="comp-header">
+        <div class="comp-header-cell">Capability</div>
+        <div class="comp-header-cell ours">Aisleview</div>
+        <div class="comp-header-cell">Autonomous Robots</div>
+        <div class="comp-header-cell">Fixed Cameras</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell">Continuous Coverage</div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+        <div class="comp-cell"><span class="comp-partial">Periodic scans</span></div>
+        <div class="comp-cell"><span class="comp-partial">Fixed zones only</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell">Low Capex / Fast Deploy</div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+        <div class="comp-cell"><span class="comp-no">High cost</span></div>
+        <div class="comp-cell"><span class="comp-no">High cost</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell">Zero Operations Disruption</div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+        <div class="comp-cell"><span class="comp-no">Aisle blocking</span></div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell">Closed-Loop Action Engine</div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+        <div class="comp-cell"><span class="comp-no">Detection only</span></div>
+        <div class="comp-cell"><span class="comp-no">Detection only</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell">Works Across All Categories</div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+        <div class="comp-cell"><span class="comp-partial">Structured only</span></div>
+        <div class="comp-cell"><span class="comp-partial">Structured only</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell">Mid-Market Accessible</div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+        <div class="comp-cell"><span class="comp-no">Enterprise only</span></div>
+        <div class="comp-cell"><span class="comp-no">Enterprise only</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell">Real-Time Root Cause Analysis</div>
+        <div class="comp-cell"><span class="comp-check">&#10003;</span></div>
+        <div class="comp-cell"><span class="comp-partial">Limited</span></div>
+        <div class="comp-cell"><span class="comp-partial">Limited</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">Applications</span>
+      <h2 class="section-title">One platform. Multiple retail intelligence layers.</h2>
+      <p class="section-desc">
+        Aisleview's spatial intelligence doesn't just detect out-of-stocks. It sees your entire store.
+      </p>
+    </div>
+    <div class="usecases-grid">
+      <div class="usecase-card fade-in fade-in-delay-1">
+        <div class="usecase-icon purple">&#128269;</div>
+        <h3>Out-of-Stock Detection</h3>
+        <p>Continuous, real-time identification of empty shelves and low-stock conditions — prioritized by revenue impact and actionable immediately.</p>
+      </div>
+      <div class="usecase-card fade-in fade-in-delay-2">
+        <div class="usecase-icon green">&#128202;</div>
+        <h3>Planogram Compliance</h3>
+        <p>Verify shelf layouts match planned configurations. Detect mis-shelved, mis-faced, and out-of-place products automatically.</p>
+      </div>
+      <div class="usecase-card fade-in fade-in-delay-3">
+        <div class="usecase-icon amber">&#128176;</div>
+        <h3>Price &amp; Label Verification</h3>
+        <p>Spatial matching of shelf labels to product placement ensures pricing accuracy and regulatory compliance across every aisle.</p>
+      </div>
+      <div class="usecase-card fade-in fade-in-delay-1">
+        <div class="usecase-icon rose">&#127981;</div>
+        <h3>Spatial Store Mapping</h3>
+        <p>Build living digital representations of your store environment. Enable location-aware analytics for CPG brands and retail operations teams.</p>
+      </div>
+      <div class="usecase-card fade-in fade-in-delay-2">
+        <div class="usecase-icon blue">&#128203;</div>
+        <h3>Compliance Auditing</h3>
+        <p>Automated verification of promotional displays, endcap execution, and brand standards — with timestamped evidence trails.</p>
+      </div>
+      <div class="usecase-card fade-in fade-in-delay-3">
+        <div class="usecase-icon teal">&#128101;</div>
+        <h3>Operational Intelligence</h3>
+        <p>Insights into store conditions, associate workflows, and safety compliance. Turn ambient data into continuous improvement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section id="roi">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">ROI Calculator</span>
+      <h2 class="section-title">See the impact for your stores.</h2>
+      <p class="section-desc">
+        Estimate how much revenue Aisleview can recover by closing the shelf-level visibility gap.
+      </p>
+    </div>
+    <div class="roi-calculator fade-in fade-in-delay-1">
+      <div class="roi-inputs">
+        <div class="roi-field">
+          <label for="stores">Number of Stores</label>
+          <input type="number" id="stores" value="25" min="1" max="10000" oninput="calcROI()">
+        </div>
+        <div class="roi-field">
+          <label for="revenue">Avg. Annual Revenue per Store ($)</label>
+          <input type="number" id="revenue" value="15000000" min="100000" step="100000" oninput="calcROI()">
+        </div>
+        <div class="roi-field">
+          <label for="oosRate">Estimated OOS Rate (%)</label>
+          <input type="number" id="oosRate" value="8" min="1" max="25" step="0.5" oninput="calcROI()">
+        </div>
+        <div class="roi-field">
+          <label for="recovery">Expected Recovery Rate (%)</label>
+          <select id="recovery" onchange="calcROI()">
+            <option value="25">Conservative — 25%</option>
+            <option value="40" selected>Moderate — 40%</option>
+            <option value="55">Aggressive — 55%</option>
+          </select>
+        </div>
+      </div>
+      <div class="roi-result">
+        <div class="roi-result-label">Estimated Annual Revenue Recovery</div>
+        <div class="roi-result-value" id="roiValue">$12.0M</div>
+        <div class="roi-result-sub" id="roiSub">Across 25 stores — $480,000 per store per year</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">About</span>
+      <h2 class="section-title">We're building the connective tissue between physical retail and AI.</h2>
+    </div>
+    <div class="about-content">
+      <div class="about-text fade-in">
+        <p>
+          Retail in 2025 is no longer online vs. offline — it's one continuous, connected journey. Yet the physical store remains a black box. Inventory systems are disconnected from shelf reality. Operations teams fly blind. And customers walk away.
+        </p>
+        <p>
+          Aisleview was founded on a simple premise: the next wave of retail winners won't be the brands with the most channels, but the ones that can orchestrate data, stores, and operations as one system.
+        </p>
+        <p>
+          We're a team of spatial computing, computer vision, and retail operations veterans building the platform that makes every interaction in a store visible, actionable, and intentional.
+        </p>
+      </div>
+      <div class="about-values fade-in fade-in-delay-1">
+        <div class="value-item">
+          <h3>&#127919; Zero Disruption</h3>
+          <p>We fit into your operations, not the other way around. No workflows change. No retraining. Just intelligence layered on top.</p>
+        </div>
+        <div class="value-item">
+          <h3>&#128274; Stealthy By Design</h3>
+          <p>Our technology is ambient and invisible. Customers experience better-stocked shelves — without ever knowing how.</p>
+        </div>
+        <div class="value-item">
+          <h3>&#9889; Action, Not Alerts</h3>
+          <p>We don't add to dashboard fatigue. Every insight becomes a prioritized task that gets verified — closing the loop between detection and resolution.</p>
+        </div>
+        <div class="value-item">
+          <h3>&#128200; Built for Scale</h3>
+          <p>From a 5-store chain to a 500-store fleet. Our per-store SaaS model means you grow when you're ready.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="cta-banner-bg"></div>
+  <div class="fade-in">
+    <h2>See what your shelves<br>have been telling you.</h2>
+    <p>
+      Schedule a confidential demo to see Aisleview's spatial intelligence in action for your stores.
+    </p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">
+        Schedule a Demo
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrapper">
+      <div class="contact-info fade-in">
+        <span class="section-label">Get Started</span>
+        <h3>Let's explore what Aisleview can do for your stores.</h3>
+        <p>
+          We work under NDA with select retail partners. Tell us about your environment and we'll show you what continuous spatial intelligence looks like for your operation.
+        </p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">&#128231;</div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            hello@aisleview.ai
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">&#128205;</div>
+          <div class="contact-detail-text">
+            <strong>Location</strong>
+            San Francisco, CA
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">&#128274;</div>
+          <div class="contact-detail-text">
+            <strong>Confidentiality</strong>
+            All demos and discussions are under NDA
+          </div>
+        </div>
+      </div>
+      <form class="contact-form fade-in fade-in-delay-1" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Jane" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Work Email</label>
+          <input type="email" id="email" placeholder="jane@company.com" required>
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" placeholder="Company name" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="role">Your Role</label>
+            <select id="role">
+              <option value="">Select...</option>
+              <option>C-Level / VP</option>
+              <option>Director</option>
+              <option>Store Operations</option>
+              <option>Technology / IT</option>
+              <option>Category / Merchandising</option>
+              <option>Supply Chain</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="storeCount">Number of Stores</label>
+            <select id="storeCount">
+              <option value="">Select...</option>
+              <option>1 – 10</option>
+              <option>11 – 50</option>
+              <option>51 – 200</option>
+              <option>201 – 500</option>
+              <option>500+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">What challenge are you looking to solve?</label>
+          <textarea id="message" rows="4" placeholder="Tell us about your biggest shelf-level visibility challenges..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">Request Confidential Demo</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">Av</span>
+        aisleview
+      </a>
+      <p>Spatial intelligence for retail. Connecting the physical world to AI-driven action.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#solution">How It Works</a></li>
+        <li><a href="#usecases">Use Cases</a></li>
+        <li><a href="#comparison">Why Aisleview</a></li>
+        <li><a href="#roi">ROI Calculator</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Twitter / X</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 Aisleview, Inc. All rights reserved.</span>
+    <span>Confidential &amp; Proprietary</span>
+  </div>
+</footer>
+
+<script>
+// --- Nav scroll ---
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// --- Mobile menu ---
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// --- Scroll animations ---
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// --- Stat counter animation ---
+function animateCounters() {
+  document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const isDecimal = target < 10;
+    const duration = 2000;
+    const start = performance.now();
+
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = target * eased;
+      if (isDecimal) {
+        el.textContent = prefix + current.toFixed(1) + suffix;
+      } else {
+        el.textContent = prefix + Math.round(current) + suffix;
+      }
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounters();
+      statsObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+statsObserver.observe(document.querySelector('.stats-bar'));
+
+// --- ROI Calculator ---
+function calcROI() {
+  const stores = parseInt(document.getElementById('stores').value) || 0;
+  const revenue = parseInt(document.getElementById('revenue').value) || 0;
+  const oosRate = parseFloat(document.getElementById('oosRate').value) || 0;
+  const recovery = parseInt(document.getElementById('recovery').value) || 0;
+
+  const lostSales = revenue * (oosRate / 100) * 0.5; // ~50% of OOS leads to lost sale
+  const recovered = lostSales * (recovery / 100);
+  const total = recovered * stores;
+  const perStore = recovered;
+
+  const format = (n) => {
+    if (n >= 1e9) return '$' + (n / 1e9).toFixed(1) + 'B';
+    if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return '$' + (n / 1e3).toFixed(0) + 'K';
+    return '$' + n.toFixed(0);
+  };
+
+  document.getElementById('roiValue').textContent = format(total);
+  document.getElementById('roiSub').textContent =
+    'Across ' + stores + ' store' + (stores !== 1 ? 's' : '') +
+    ' \u2014 ' + format(perStore) + ' per store per year';
+}
+calcROI();
+
+// --- Form submit ---
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Request Received \u2713';
+  btn.style.background = '#10b981';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Request Confidential Demo';
+    btn.style.background = '';
+    btn.disabled = false;
+    e.target.reset();
+  }, 3000);
+}
+</script>
+</body>
+</html>
